@@ -8,9 +8,14 @@ const app = express();
 app.use(express.json());
 
 // routes
-
+// routes-books
 const booksRouter = require("./routes/books");
 app.use("/books", booksRouter);
+
+// routes-categories
+const categoriesRouter = require("./routes/categories");
+app.use("/categories", categoriesRouter);
+
 
 // db connection
 
