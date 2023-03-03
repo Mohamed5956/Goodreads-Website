@@ -4,7 +4,13 @@ const booksModel = require("../models/books");
 
 router.get("/", async (req, res) => {
   try {
-    const books = await booksModel.find({});
+    const books = await booksModel
+      .find({})
+      .populate("authors")
+      .populate("categories")
+      .populate("ratings")
+      .populate("reviews")
+      .populate("status");
     res.send(books);
   } catch (err) {
     res.send(err);
@@ -14,7 +20,13 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   const id = req.params.id;
   try {
-    const book = await booksModel.findById({ _id: id });
+    const book = await booksModel
+      .findById({ _id: id })
+      .populate("authors")
+      .populate("categories")
+      .populate("ratings")
+      .populate("reviews")
+      .populate("status");
     res.send(book);
   } catch (e) {
     res.send(e);
@@ -31,24 +43,25 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put('/:id',async (req, res) => {
-    const id = req.params.id
-    try {
-        const book = await booksModel.findByIdAndUpdate(id)
-        res.send(book)
-    } catch (e) {
-        res.send(e)
-    }
-})
+router.put("/:id", async (req, res) => {
+  const id = req.params.id;
+  try {
+    const book = await booksModel.findByIdAndUpdate(id);
 
-router.delete('/:id',async (req,res) => {
-    const id = req.params.id
-    try{
-        const book = await booksModel.findByIdAndDelete({_id:id})
-        res.send(book)
-    }catch (e){
-        res.send(e)
-    }
-})
+    res.send(book);
+  } catch (e) {
+    res.send(e);
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  const id = req.params.id;
+  try {
+    const book = await booksModel.findByIdAndDelete({ _id: id });
+    res.send(book);
+  } catch (e) {
+    res.send(e);
+  }
+});
 
 module.exports = router;
