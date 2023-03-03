@@ -1,10 +1,18 @@
 const mongoose = require("mongoose");
 
 const bookScehma = new mongoose.Schema({
-  title: String,
-  description: String,
-  categoryId: { type: mongoose.Schema.Types.ObjectId, ref: "category" },
-  authorId: { type: mongoose.Schema.Types.ObjectId, ref: "author" },
+  title: { type: String, required: true },
+  description: { type: String, required: true },
+  categoryId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "category",
+    required: true,
+  },
+  authorId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "author",
+    required: true,
+  },
   image: String,
   reviewId: { type: mongoose.Schema.Types.ObjectId, ref: "review" },
 });
