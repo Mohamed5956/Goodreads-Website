@@ -12,16 +12,19 @@ const auth = require('./middlewares/auth')
 app.use(express.json());
 
 // routes
-
+// routes-books
 const booksRouter = require("./routes/books");
 app.use("/books", booksRouter);
 
+// routes-register
 const registerRouter = require("./routes/register");
 app.use("/register", registerRouter);
 
+// routes-login
 const loginRouter = require("./routes/login");
 app.use("/login", loginRouter);
 
+// routes-
 app.use("/Welcome",auth , (req,res) => {
   res.send(" ♥♥♥♥♥♥♥   Welcome 🙌 ♥♥♥♥♥♥♥♥ ")
 });
@@ -34,6 +37,17 @@ app.use("/Welcome",auth , (req,res) => {
 
 
 
+// routes-categories
+const categoriesRouter = require("./routes/categories");
+app.use("/categories", categoriesRouter);
+
+// routes-reviews
+const reviewsRouter = require("./routes/review");
+app.use("/reviews", reviewsRouter);
+
+// routes-authors
+const authorsRouter = require("./routes/author");
+app.use("/authors", authorsRouter);
 
 // db connection
 
