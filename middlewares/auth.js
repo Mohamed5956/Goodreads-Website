@@ -1,6 +1,6 @@
 const jwt = require ('jsonwebtoken');
 const { model } = require('mongoose');
-const TOKEN_KEY =process.env.TOKEN_KEY || "abdomagdy"
+const TOKEN_KEY =process.env.TOKEN_KEY 
 
 const auth = function (req,res,next){
      const token = req.headers["x-token"]; 

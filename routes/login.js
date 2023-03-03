@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router();
 const mongoose = require('mongoose')
-const User = require('../models/register')
+const User = require('../models/users')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const TOKEN_KEY =process.env.TOKEN_KEY || "abdomagdy"
+const TOKEN_KEY =process.env.TOKEN_KEY 
 
 
 router.post("/", async (req, res) => {
