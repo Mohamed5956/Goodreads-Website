@@ -7,10 +7,10 @@ router.get("/", async (req, res) => {
   try {
     const books = await booksModel
       .find({})
-      .populate("authors")
-      .populate("categories")
-      .populate("ratings")
-      .populate("reviews")
+      .populate("authorId")
+      .populate("categoryId")
+      .populate("ratingId")
+      .populate("reviewId")
       .populate("status");
     res.send(books);
   } catch (err) {
@@ -23,10 +23,10 @@ router.get("/:id", async (req, res) => {
   try {
     const book = await booksModel
       .findById({ _id: id })
-      .populate("authors")
-      .populate("categories")
-      .populate("ratings")
-      .populate("reviews")
+      .populate("authorId")
+      .populate("categoryId")
+      .populate("ratingId")
+      .populate("reviewId")
       .populate("status");
     res.send(book);
   } catch (e) {
