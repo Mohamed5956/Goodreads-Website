@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const User = require("../models/users");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const TOKEN_KEY = process.env.TOKEN_KEY || "abdomagdy";
+const TOKEN_KEY = process.env.TOKEN_KEY;
 
 router.post("/", async (req, res) => {
   try {

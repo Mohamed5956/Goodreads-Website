@@ -6,7 +6,7 @@ const DB_URL = process.env.DB_URL;
 const app = express();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const TOKEN_KEY = process.env.TOKEN_KEY || "abdomagdy";
+const TOKEN_KEY = process.env.TOKEN_KEY;
 const User = require("./models/users");
 const auth = require("./middlewares/auth");
 app.use(express.json());
