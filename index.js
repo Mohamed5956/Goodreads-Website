@@ -4,11 +4,11 @@ require("dotenv").config();
 const PORT = process.env.PORT;
 const DB_URL = process.env.DB_URL;
 const app = express();
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
-const TOKEN_KEY =process.env.TOKEN_KEY || "abdomagdy"
-const User = require('./models/register')
-const auth = require('./middlewares/auth')
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const TOKEN_KEY = process.env.TOKEN_KEY || "abdomagdy";
+const User = require("./models/users");
+const auth = require("./middlewares/auth");
 app.use(express.json());
 
 // routes
@@ -25,17 +25,9 @@ const loginRouter = require("./routes/login");
 app.use("/login", loginRouter);
 
 // routes-
-app.use("/Welcome",auth , (req,res) => {
-  res.send(" ♥♥♥♥♥♥♥   Welcome 🙌 ♥♥♥♥♥♥♥♥ ")
+app.use("/Welcome", auth, (req, res) => {
+  res.send(" ♥♥♥♥♥♥♥   Welcome 🙌 ♥♥♥♥♥♥♥♥ ");
 });
-
-
-
-
-
-
-
-
 
 // routes-categories
 const categoriesRouter = require("./routes/categories");

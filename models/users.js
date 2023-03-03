@@ -8,6 +8,6 @@ const userschema = new mongoose.Schema({
     token:{ type: String },
 })
 
-const usermodel = mongoose.model('user',userschema)
+const usermodel = mongoose.model('users',userschema)
 
 module.exports = usermodel
