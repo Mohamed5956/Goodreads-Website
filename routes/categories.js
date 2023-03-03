@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const categoryModel = require("../models/categories");
 const booksModel = require("../models/books");
+const auth = require("../middlewares/auth");
 
 // display all categories---------------------
 
@@ -29,7 +30,7 @@ router.get("/:id", async (req, res) => {
 
 // add category -----------------------
 
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
   const category = new categoryModel(req.body);
   try {
     await category.save();
@@ -41,7 +42,7 @@ router.post("/", async (req, res) => {
 
 // update category-----------------------
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", auth, async (req, res) => {
   const id = req.params.id;
   const updates = req.body;
   try {
@@ -54,7 +55,7 @@ router.put("/:id", async (req, res) => {
 
 // delete category and her books-----------------------
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", auth, async (req, res) => {
   const id = req.params.id;
   try {
     // const book = await booksModel.deleteMany({ categoryId : id });
