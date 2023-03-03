@@ -1,7 +1,7 @@
 {
   "name": "goodreads",
   "version": "1.0.0",
-  "description": "",
+  "description": "Goodreads website using NodeJs in backend and Angular in frontend",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,8 +9,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "is-regex": "^1.1.4",
+    "jsonwebtoken": "^9.0.0",
+    "moment": "^2.29.4",
     "mongoose": "^7.0.0"
-  }
+  },
+  "keywords": []
 }
