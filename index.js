@@ -16,6 +16,13 @@ app.use("/books", booksRouter);
 const categoriesRouter = require("./routes/categories");
 app.use("/categories", categoriesRouter);
 
+// routes-reviews
+const reviewsRouter = require("./routes/review");
+app.use("/reviews", reviewsRouter);
+
+// routes-authors
+const authorsRouter = require("./routes/author");
+app.use("/authors", authorsRouter);
 
 // db connection
 
