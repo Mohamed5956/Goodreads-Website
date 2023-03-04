@@ -41,7 +41,7 @@ router.get("/:id", async (req, res) => {
 
 // add category -----------------------
 
-router.post("/", admin, async (req, res) => {
+router.post("/", async (req, res) => {
   const category = new categoryModel(req.body);
   try {
     await category.save();
