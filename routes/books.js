@@ -32,7 +32,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/", auth, async (req, res) => {
+router.post("/", admin, async (req, res) => {
   const book = new booksModel(req.body);
   try {
     await book.save();
@@ -42,7 +42,7 @@ router.post("/", auth, async (req, res) => {
   }
 });
 
-router.patch("/:id", auth, async (req, res) => {
+router.patch("/:id", admin, async (req, res) => {
   const id = req.params.id;
   const updates = req.body;
   try {

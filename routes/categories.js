@@ -43,7 +43,7 @@ router.post("/", admin, async (req, res) => {
 
 // update category-----------------------
 
-router.put("/:id", auth, async (req, res) => {
+router.put("/:id", admin, async (req, res) => {
   const id = req.params.id;
   const updates = req.body;
   try {

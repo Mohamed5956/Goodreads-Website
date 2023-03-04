@@ -23,7 +23,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/", auth, async (req, res) => {
+router.post("/", admin, async (req, res) => {
   const author = new authorModel(req.body);
   try {
     await author.save();
@@ -33,11 +33,12 @@ router.post("/", auth, async (req, res) => {
   }
 });
 
-router.put("/:id", admin, async (req, res) => {
+router.patch("/:id", admin, async (req, res) => {
   const id = req.params.id;
+  const updatedAuthor = req.body;
   try {
-    const author = await authorModel.findByIdAndUpdate(id);
-    res.send(author);
+    const author = await authorModel.findByIdAndUpdate(id, updatedAuthor);
+    res.send(updatedAuthor);
   } catch (e) {
     res.send(e);
   }

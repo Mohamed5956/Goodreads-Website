@@ -9,8 +9,6 @@ const admin = async (req, res, next) => {
   }
   try {
     const decoded = jwt.verify(token, TOKEN_KEY);
-    req.user = decoded;
-    console.log(decoded.user_id);
     const user = await UserModel.findById(decoded.user_id);
     if (!user) {
       return res.status(401).send("Invalid Token");
