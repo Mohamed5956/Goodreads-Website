@@ -32,11 +32,13 @@ router.post("/", auth, async (req, res) => {
   }
 });
 
-router.put("/:id", auth, async (req, res) => {
+router.patch("/:id", auth, async (req, res) => {
   const id = req.params.id;
+  const updatedData = req.body;
   try {
-    const review = await reviewModel.findByIdAndUpdate(id);
-    res.send(review);
+    const review = await reviewModel.findByIdAndUpdate(id, updatedData);
+    // console.log(review);
+    res.send(updatedData);
   } catch (e) {
     res.send(e);
   }

@@ -1,7 +1,8 @@
 const jwt = require("jsonwebtoken");
 const TOKEN_KEY = process.env.TOKEN_KEY;
+const UserModel = require("../models/users");
 
-const admin = (req, res, next) => {
+const admin = async (req, res, next) => {
   const token = req.headers["x-token"];
 
   if (!token) {
@@ -9,9 +10,12 @@ const admin = (req, res, next) => {
   }
   try {
     const decoded = jwt.verify(token, TOKEN_KEY);
-    req.user = decoded;
+    const user = await UserModel.findById(decoded.user_id);
+    if (!user) {
+      return res.status(401).send("Invalid Token");
+    }
+    req.user = user;
     if (!req.user.isAdmin) {
-      // check if user is not an admin
       return res.status(403).send("You do not have admin privileges");
     }
   } catch (err) {
