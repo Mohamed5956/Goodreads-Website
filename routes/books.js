@@ -1,5 +1,7 @@
 const express = require("express");
 const admin = require("../middlewares/admin");
+const auth = require("../middlewares/auth");
+
 const router = express.Router();
 const booksModel = require("../models/books");
 
@@ -9,9 +11,7 @@ router.get("/", async (req, res) => {
       .find({})
       .populate("authorId")
       .populate("categoryId")
-      .populate("ratingId")
-      .populate("reviewId")
-      .populate("status");
+      .populate("reviewId");
     res.send(books);
   } catch (err) {
     res.send(err);
@@ -25,16 +25,14 @@ router.get("/:id", async (req, res) => {
       .findById({ _id: id })
       .populate("authorId")
       .populate("categoryId")
-      .populate("ratingId")
-      .populate("reviewId")
-      .populate("status");
+      .populate("reviewId");
     res.send(book);
   } catch (e) {
     res.send(e);
   }
 });
 
-router.post("/", admin, async (req, res) => {
+router.post("/", auth, async (req, res) => {
   const book = new booksModel(req.body);
   try {
     await book.save();
@@ -44,10 +42,11 @@ router.post("/", admin, async (req, res) => {
   }
 });
 
-router.put("/:id", admin, async (req, res) => {
+router.patch("/:id", auth, async (req, res) => {
   const id = req.params.id;
+  const updates = req.body;
   try {
-    const book = await booksModel.findByIdAndUpdate(id);
+    const book = await booksModel.findByIdAndUpdate(id, updates);
 
     res.send(book);
   } catch (e) {

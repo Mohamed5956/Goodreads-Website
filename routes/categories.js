@@ -3,6 +3,7 @@ const router = express.Router();
 const categoryModel = require("../models/categories");
 const booksModel = require("../models/books");
 const admin = require("../middlewares/admin");
+const auth = require("../middlewares/auth");
 
 // display all categories---------------------
 
@@ -42,7 +43,7 @@ router.post("/", admin, async (req, res) => {
 
 // update category-----------------------
 
-router.put("/:id", admin, async (req, res) => {
+router.put("/:id", auth, async (req, res) => {
   const id = req.params.id;
   const updates = req.body;
   try {

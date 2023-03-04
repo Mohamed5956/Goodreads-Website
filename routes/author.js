@@ -23,7 +23,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/", admin, async (req, res) => {
+router.post("/", auth, async (req, res) => {
   const author = new authorModel(req.body);
   try {
     await author.save();
