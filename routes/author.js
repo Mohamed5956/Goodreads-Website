@@ -7,6 +7,11 @@ const authorModel = require("../models/author");
 router.get("/", async (req, res) => {
   try {
     const authors = await authorModel.find({});
+    res.header("Access-Control-Allow-Origin", "http://localhost:4200"); // update with your Angular app URL
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept"
+    );
     res.send(authors);
   } catch (err) {
     res.send(err);
@@ -17,6 +22,11 @@ router.get("/:id", async (req, res) => {
   const id = req.params.id;
   try {
     const author = await authorModel.findById({ _id: id });
+    res.header("Access-Control-Allow-Origin", "http://localhost:4200"); // update with your Angular app URL
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept"
+    );
     res.send(author);
   } catch (e) {
     res.send(e);
@@ -27,6 +37,11 @@ router.post("/", admin, async (req, res) => {
   const author = new authorModel(req.body);
   try {
     await author.save();
+    res.header("Access-Control-Allow-Origin", "http://localhost:4200"); // update with your Angular app URL
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept"
+    );
     res.send(author);
   } catch (e) {
     res.send(e);
