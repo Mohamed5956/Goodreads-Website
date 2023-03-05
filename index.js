@@ -1,3 +1,4 @@
+const cors = require("cors");
 const express = require("express");
 const mongoose = require("mongoose");
 require("dotenv").config();
@@ -10,7 +11,7 @@ const TOKEN_KEY = process.env.TOKEN_KEY;
 const User = require("./models/users");
 const auth = require("./middlewares/auth");
 app.use(express.json());
-
+app.use(cors());
 // routes
 // routes-books
 const booksRouter = require("./routes/books");

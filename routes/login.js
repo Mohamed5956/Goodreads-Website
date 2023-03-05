@@ -19,8 +19,12 @@ router.post("/", async (req, res) => {
       const token = jwt.sign({ user_id: user._id, email }, TOKEN_KEY);
 
       user.token = token;
-
-      res.status(200).json(user);
+      res.header("Access-Control-Allow-Origin", "http://localhost:4200"); // update with your Angular app URL
+      res.header(
+        "Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept"
+      );
+      res.status(200).send("success");
     }
     res.status(400).send("Invalid Credentials");
   } catch (err) {
