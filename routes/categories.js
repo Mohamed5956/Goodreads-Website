@@ -43,13 +43,9 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   const category = new categoryModel(req.body);
+  console.log(req.body);
   try {
     await category.save();
-    res.header("Access-Control-Allow-Origin", "http://localhost:4200"); // update with your Angular app URL
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept"
-    );
     res.send(category);
   } catch (e) {
     res.send(e);

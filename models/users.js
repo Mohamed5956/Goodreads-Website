@@ -5,7 +5,7 @@ const userschema = new mongoose.Schema({
   email: { type: String, unique: true, match: /.+@.+\..+/ },
   password: { type: String, require: true },
   image: { type: String, require: true },
-  isAdmin:{type: Boolean,default: false},
+  isAdmin: { type: Boolean, default: false },
   token: { type: String },
 });
 

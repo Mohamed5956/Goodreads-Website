@@ -9,7 +9,10 @@ const jwt = require("jsonwebtoken");
 const TOKEN_KEY = process.env.TOKEN_KEY;
 const User = require("./models/users");
 const auth = require("./middlewares/auth");
+  const cors = require("cors");
+
 app.use(express.json());
+app.use(cors());
 
 // routes
 // routes-books
