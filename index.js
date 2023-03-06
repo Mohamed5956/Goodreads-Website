@@ -44,10 +44,10 @@ app.use("/reviews", reviewsRouter);
 const authorsRouter = require("./routes/author");
 app.use("/authors", authorsRouter);
 
-// routes-authors
-// http://localhost:5000/ratings/:id
-const ratingsbook = require("./routes/ratings");
-app.use("/ratings", ratingsbook);
+// routes-ratings
+// http://localhost:5000/ratings/:idBook
+const ratingsRouter = require("./routes/ratings");
+app.use("/ratings", ratingsRouter);
 
 // db connection
 
