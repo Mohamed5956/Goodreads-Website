@@ -9,7 +9,7 @@ const jwt = require("jsonwebtoken");
 const TOKEN_KEY = process.env.TOKEN_KEY;
 const User = require("./models/users");
 const auth = require("./middlewares/auth");
-  const cors = require("cors");
+const cors = require("cors");
 
 app.use(express.json());
 app.use(cors());
@@ -43,6 +43,11 @@ app.use("/reviews", reviewsRouter);
 // routes-authors
 const authorsRouter = require("./routes/author");
 app.use("/authors", authorsRouter);
+
+// routes-authors
+// http://localhost:5000/ratings/:id
+const ratingsbook = require("./routes/ratings");
+app.use("/ratings", ratingsbook);
 
 // db connection
 
