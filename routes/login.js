@@ -24,9 +24,9 @@ router.post("/", async (req, res) => {
         "Access-Control-Allow-Headers",
         "Origin, X-Requested-With, Content-Type, Accept"
       );
-      res.status(200).send("success");
+      res.status(200).json(user);
     }
-    res.status(400).send("Invalid Credentials");
+    res.status(400).json("Invalid Credentials");
   } catch (err) {
     console.log(err);
   }

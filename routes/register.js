@@ -12,11 +12,11 @@ router.post("/", async (req, res) => {
 
     if (!(email && password && firstname && lastname && image)) {
       
-      res.status(400).send("All input is required");
+      res.status(400).json("All input is required");
     } else {
       const oldUser = await User.findOne({ email });
       if (oldUser) {
-        return res.status(409).send("User Already Exist. Please Login");
+        return res.status(409).json("User Already Exist. Please Login");
       }
 
       encryptedPassword = await bcrypt.hash(password, 10);
@@ -37,7 +37,7 @@ router.post("/", async (req, res) => {
         "Access-Control-Allow-Headers",
         "Origin, X-Requested-With, Content-Type, Accept"
       );
-      res.status(201).json(user);
+      res.status(201).json("success");
     }
   } catch (err) {
     console.log(err);
