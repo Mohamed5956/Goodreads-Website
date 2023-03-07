@@ -45,6 +45,11 @@ app.use("/reviews", reviewsRouter);
 const authorsRouter = require("./routes/author");
 app.use("/authors", authorsRouter);
 
+// routes-ratings
+// http://localhost:5000/ratings/:idBook
+const ratingsRouter = require("./routes/ratings");
+app.use("/ratings", ratingsRouter);
+
 // db connection
 
 mongoose.connect(DB_URL);
