@@ -49,6 +49,10 @@ app.use("/authors", authorsRouter);
 // http://localhost:5000/ratings/:idBook
 const ratingsRouter = require("./routes/ratings");
 app.use("/ratings", ratingsRouter);
+// routes-users
+// http://localhost:5000/users/:email
+const usersRouter = require("./routes/users");
+app.use("/users", usersRouter);
 
 // db connection
 
