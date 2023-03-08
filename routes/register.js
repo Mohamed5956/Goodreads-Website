@@ -11,11 +11,12 @@ router.post("/", async (req, res) => {
     const { firstname, lastname, email, password, image } = req.body;
 
     if (!(email && password && firstname && lastname && image)) {
-      res.status(400).send("All input is required");
+      
+      res.status(400).json("All input is required");
     } else {
       const oldUser = await User.findOne({ email });
       if (oldUser) {
-        return res.status(409).send("User Already Exist. Please Login");
+        return res.status(409).json("User Already Exist. Please Login");
       }
 
       encryptedPassword = await bcrypt.hash(password, 10);
@@ -31,8 +32,12 @@ router.post("/", async (req, res) => {
       const token = jwt.sign({ user_id: user._id, email }, TOKEN_KEY);
 
       user.token = token;
-
-      res.status(201).json(user);
+      res.header("Access-Control-Allow-Origin", "http://localhost:4200"); // update with your Angular app URL
+      res.header(
+        "Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept"
+      );
+      res.status(201).json("success");
     }
   } catch (err) {
     console.log(err);

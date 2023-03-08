@@ -5,7 +5,7 @@ const authorScehma = new mongoose.Schema({
   firstName: String,
   lastName: String,
   birthDate: Date,
-  description: String,
+  description:String
 });
 const authorModel = mongoose.model("author", authorScehma);
 
