@@ -22,7 +22,7 @@ router.post("/", async (req, res) => {
 
       res.status(200).json(user);
     }
-    res.status(400).send("Invalid Credentials");
+    // res.status(400).send("Invalid Credentials");
   } catch (err) {
     console.log(err);
   }
