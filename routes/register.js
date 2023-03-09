@@ -11,7 +11,6 @@ router.post("/", async (req, res) => {
     const { firstname, lastname, email, password, image } = req.body;
 
     if (!(email && password && firstname && lastname && image)) {
-      
       res.status(400).json("All input is required");
     } else {
       const oldUser = await User.findOne({ email });
@@ -32,11 +31,6 @@ router.post("/", async (req, res) => {
       const token = jwt.sign({ user_id: user._id, email }, TOKEN_KEY);
 
       user.token = token;
-      res.header("Access-Control-Allow-Origin", "http://localhost:4200"); // update with your Angular app URL
-      res.header(
-        "Access-Control-Allow-Headers",
-        "Origin, X-Requested-With, Content-Type, Accept"
-      );
       res.status(201).json("success");
     }
   } catch (err) {

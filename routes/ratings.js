@@ -8,11 +8,6 @@ router.get("/:id", async (req, res) => {
   const id = req.params.id;
   try {
     const ratingsBook = await reviewModel.find({ bookId: id });
-    res.header("Access-Control-Allow-Origin", "http://localhost:4200"); // update with your Angular app URL
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept"
-    );
     const arrRatings = ratingsBook.map((elm) => elm.rating);
     var ratingsSum = 0;
     arrRatings.forEach((elm) => {
