@@ -67,6 +67,7 @@ router.patch("/:id", admin, async (req, res) => {
 router.delete("/:id", auth, async (req, res) => {
   const id = req.params.id;
   try {
+    const deletedbooks = await booksModel.deleteMany({ categoryId: id });
     const author = await authorModel.findByIdAndDelete({ _id: id });
     res.header("Access-Control-Allow-Origin", "http://localhost:4200"); // update with your Angular app URL
     res.header(

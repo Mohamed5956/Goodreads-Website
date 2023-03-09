@@ -26,6 +26,18 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   const id = req.params.id;
   try {
+    let { page, size, sort } = req.query;
+  
+    // If the page is not applied in query.
+    if (!page) {
+
+        // Make the Default value one.
+        page = 1;
+    }
+
+    if (!size) {
+        size = 10;
+    }
     const book = await booksModel
       .findById({ _id: id })
       .populate("authorId")
