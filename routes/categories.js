@@ -10,11 +10,6 @@ const auth = require("../middlewares/auth");
 router.get("/", async (req, res) => {
   try {
     const categories = await categoryModel.find({});
-    res.header("Access-Control-Allow-Origin", "http://localhost:4200"); // update with your Angular app URL
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept"
-    );
     res.send(categories);
   } catch (err) {
     res.send(err);
@@ -28,11 +23,6 @@ router.get("/:id", async (req, res) => {
   try {
     // const books = await booksModel.find({ categoryId: id });
     const category = await categoryModel.findById({ _id: id });
-    res.header("Access-Control-Allow-Origin", "http://localhost:4200"); // update with your Angular app URL
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept"
-    );
     res.send(category);
   } catch (e) {
     res.send(e);
@@ -41,7 +31,7 @@ router.get("/:id", async (req, res) => {
 
 // add category -----------------------
 
-router.post("/", async (req, res) => {
+router.post("/", admin, async (req, res) => {
   const category = new categoryModel(req.body);
   console.log(req.body);
   try {
@@ -59,11 +49,6 @@ router.put("/:id", admin, async (req, res) => {
   const updates = req.body;
   try {
     const category = await categoryModel.findByIdAndUpdate(id, updates);
-    res.header("Access-Control-Allow-Origin", "http://localhost:4200"); // update with your Angular app URL
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept"
-    );
     res.send(category);
   } catch (e) {
     res.send(e);
@@ -77,11 +62,6 @@ router.delete("/:id", admin, async (req, res) => {
   try {
     const deletedbooks = await booksModel.deleteMany({ categoryId: id });
     const category = await categoryModel.findByIdAndDelete({ _id: id });
-    res.header("Access-Control-Allow-Origin", "http://localhost:4200"); // update with your Angular app URL
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept"
-    );
     res.send(category);
   } catch (e) {
     res.send(e);

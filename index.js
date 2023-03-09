@@ -10,7 +10,6 @@ const jwt = require("jsonwebtoken");
 const TOKEN_KEY = process.env.TOKEN_KEY;
 const User = require("./models/users");
 const auth = require("./middlewares/auth");
-  
 
 app.use(express.json());
 app.use(cors());
@@ -57,7 +56,6 @@ app.use("/users", usersRouter);
 // db connection
 
 mongoose.connect(DB_URL);
-
 // server connection
 app.listen(PORT, () => {
   console.log(`Example app listening at http://localhost:${PORT}`);

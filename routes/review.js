@@ -6,11 +6,6 @@ const reviewModel = require("../models/review");
 router.get("/", async (req, res) => {
   try {
     const reviews = await reviewModel.find({});
-    res.header("Access-Control-Allow-Origin", "http://localhost:4200"); // update with your Angular app URL
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept"
-    );
     res.send(reviews);
   } catch (err) {
     res.send(err);
