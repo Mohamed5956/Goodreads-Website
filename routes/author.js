@@ -47,8 +47,8 @@ router.patch("/:id", admin, async (req, res) => {
 router.delete("/:id", admin, async (req, res) => {
   const id = req.params.id;
   try {
-    const deletedbooks = await booksModel.deleteMany({ categoryId: id });
     const author = await authorModel.findByIdAndDelete({ _id: id });
+
     res.send(author);
   } catch (e) {
     res.send(e);
