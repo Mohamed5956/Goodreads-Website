@@ -45,22 +45,56 @@ router.post(
   }
 );
 
-router.patch("/:id", admin, async (req, res) => {
-  const id = req.params.id;
-  const updatedAuthor = req.body;
-  try {
-    const author = await authorModel.findByIdAndUpdate(id, updatedAuthor);
-    res.send(updatedAuthor);
-  } catch (e) {
-    res.send(e);
+router.patch(
+  "/:id",
+  [admin, upload("author").single("photo")],
+  async (req, res) => {
+    const id = req.params.id;
+    try {
+      const author = await authorModel.findById(id);
+      if (!author) {
+        res.status(404).send("author not found");
+      }
+      if (req.file) {
+        const imagePath = path.join(
+          __dirname,
+          "../uploads/author",
+          author.photo
+        );
+        fs.unlinkSync(imagePath);
+        author.photo = req.file.filename;
+      }
+        author.firstName = req.body.name,
+        author.lastName =req.body.lastName,
+        author.birthDate =req.body.birthDate,
+        author.description =req.body.description,
+        author.photo =req.file.filename,
+    
+      await authorModel.save();
+      res.status(200).send("author updated successfully");
+      res.send(updatedAuthor);
+    } catch (e) {
+      res.send(e);
+    }
   }
-});
+);
 
 router.delete("/:id", admin, async (req, res) => {
   const id = req.params.id;
   try {
-    const author = await authorModel.findByIdAndDelete({ _id: id });
-    res.send(author);
+    const author = await authorModel.findById({ _id: id });
+    if (!author) {
+      res.status(404).send("author not found");
+    }
+    const imagePath = path.join(
+      __dirname,
+      "../assets/uploads",
+      "author",
+      author.photo
+    );
+    fs.unlinkSync(imagePath);
+    const deletedAuthor = await authorModel.findByIdAndDelete(id);
+    res.status(200).send(deletedAuthor);
   } catch (e) {
     res.send(e);
   }
