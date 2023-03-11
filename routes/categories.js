@@ -4,6 +4,9 @@ const categoryModel = require("../models/categories");
 const booksModel = require("../models/books");
 const admin = require("../middlewares/admin");
 const auth = require("../middlewares/auth");
+const upload = require("../middlewares/upload");
+const fs = require("fs");
+const path = require("path");
 
 // display all categories---------------------
 
@@ -31,38 +34,76 @@ router.get("/:id", async (req, res) => {
 
 // add category -----------------------
 
-router.post("/", admin, async (req, res) => {
-  const category = new categoryModel(req.body);
-  console.log(req.body);
-  try {
-    await category.save();
-    res.send(category);
-  } catch (e) {
-    res.send(e);
+router.post(
+  "/",
+  [admin, upload("category").single("image")],
+  async (req, res) => {
+    const category = new categoryModel({
+      name: req.body.name,
+      image: req.file.filename,
+    });
+    try {
+      await category.save();
+      res.send(category);
+    } catch (e) {
+      res.send(e);
+    }
   }
-});
+);
 
 // update category-----------------------
 
-router.put("/:id", admin, async (req, res) => {
-  const id = req.params.id;
-  const updates = req.body;
-  try {
-    const category = await categoryModel.findByIdAndUpdate(id, updates);
-    res.send(category);
-  } catch (e) {
-    res.send(e);
+router.patch(
+  "/:id",
+  [admin, upload("category").single("image")],
+  async (req, res) => {
+    const id = req.params.id;
+    const updates = {
+      name: req.body.name,
+      image: req.file.filename,
+    };
+    try {
+      const category = await categoryModel.findById(id);
+      if (!category) {
+        res.status(404).send("category not found");
+      }
+      if (req.file) {
+        const imagePath = path.join(
+          __dirname,
+          "../uploads/category",
+          category.image
+        );
+        fs.unlinkSync(imagePath);
+        category.image = req.file.filename;
+      }
+      category.name = req.body.name;
+      await categoryModel.save();
+      res.status(200).send("updated successfully");
+    } catch (e) {
+      res.send(e);
+    }
   }
-});
+);
 
 // delete category and her books-----------------------
 
 router.delete("/:id", admin, async (req, res) => {
   const id = req.params.id;
   try {
-    const deletedbooks = await booksModel.deleteMany({ categoryId: id });
-    const category = await categoryModel.findByIdAndDelete({ _id: id });
-    res.send(category);
+    const category = await categoryModel.findById({ _id: id });
+    if (!category) {
+      res.status(404).send("category not found");
+    }
+    const imagePath = path.join(
+      __dirname,
+      "../assets/uploads",
+      "category",
+      category.image
+    );
+    fs.unlinkSync(imagePath);
+    await booksModel.deleteMany({ categoryId: id });
+    const deletedCategory = await categoryModel.findByIdAndDelete(id);
+    res.send(deletedCategory);
   } catch (e) {
     res.send(e);
   }

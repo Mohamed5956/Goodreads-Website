@@ -8,22 +8,22 @@ const booksModel = require("../models/books");
 
 router.get("/", async (req, res) => {
   try {
-    let { page, size, sort } = req.query;
+    // let { page, size, sort } = req.query;
 
     // If the page is not applied in query.
-    if (!page) {
-      // Make the Default value one.
-      page = 1;
-    }
+    // if (!page) {
+    // Make the Default value one.
+    //   page = 1;
+    // }
 
-    if (!size) {
-      size = 2;
-    }
-    const limit = parseInt(size);
+    // if (!size) {
+    //   size = 2;
+    // }
+    // const limit = parseInt(size);
+    // .sort(_id)
+    // .limit(limit)
     const books = await booksModel
       .find({})
-      .sort(_id)
-      .limit(limit)
       .populate("authorId")
       .populate("categoryId")
       .populate("reviewId");
