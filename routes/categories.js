@@ -57,11 +57,8 @@ router.patch(
   "/:id",
   [admin, upload("category").single("image")],
   async (req, res) => {
+    console.log("hi update");
     const id = req.params.id;
-    const updates = {
-      name: req.body.name,
-      image: req.file.filename,
-    };
     try {
       const category = await categoryModel.findById(id);
       if (!category) {
@@ -77,7 +74,7 @@ router.patch(
         category.image = req.file.filename;
       }
       category.name = req.body.name;
-      await categoryModel.save();
+      await category.save();
       res.status(200).send("updated successfully");
     } catch (e) {
       res.send(e);

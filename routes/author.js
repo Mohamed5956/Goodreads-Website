@@ -70,7 +70,7 @@ router.patch(
         author.description =req.body.description,
         author.photo =req.file.filename,
     
-      await authorModel.save();
+      await author.save();
       res.status(200).send("author updated successfully");
       res.send(updatedAuthor);
     } catch (e) {
