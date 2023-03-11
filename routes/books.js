@@ -63,4 +63,21 @@ router.delete("/:id", admin, async (req, res) => {
   }
 });
 
+//-----------------/books/author/:authorId
+router.get("/author/:authorId", async (req, res) => {
+  const id = req.params.authorId;
+  //console.log(id);
+  try {
+    const book = await booksModel.find({ authorId: id });
+    res.header("Access-Control-Allow-Origin", "http://localhost:4200"); // update with your Angular app URL
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept"
+    );
+    res.send(book);
+  } catch (e) {
+    res.send(e);
+  }
+});
+
 module.exports = router;
