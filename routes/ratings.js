@@ -14,8 +14,13 @@ router.get("/:id", async (req, res) => {
       ratingsSum += elm;
     });
     const avgRating = ratingsSum / arrRatings.length;
-    // console.log(sum);
-    res.send(`${avgRating}`);
+      rateObj = {
+        avg: avgRating,
+        count: arrRatings.length,
+      };
+      rateObj = JSON.stringify(rateObj);
+      res.send(`${rateObj}`);
+
   } catch (err) {
     res.send(err);
   }

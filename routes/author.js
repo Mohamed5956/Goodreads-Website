@@ -6,6 +6,7 @@ const authorModel = require("../models/author");
 const upload = require("../middlewares/upload");
 const fs = require("fs");
 const path = require("path");
+const bookModel = require("../models/books");
 router.get("/", async (req, res) => {
   try {
     const authors = await authorModel.find({});
@@ -64,14 +65,13 @@ router.patch(
         fs.unlinkSync(imagePath);
         author.photo = req.file.filename;
       }
-        author.firstName = req.body.name,
-        author.lastName =req.body.lastName,
-        author.birthDate =req.body.birthDate,
-        author.description =req.body.description,
-        author.photo =req.file.filename,
-    
-      await author.save();
-      res.status(200).send("author updated successfully");
+      (author.firstName = req.body.name),
+        (author.lastName = req.body.lastName),
+        (author.birthDate = req.body.birthDate),
+        (author.description = req.body.description),
+        (author.photo = req.file.filename),
+        await author.save();
+      res.send(author);
       res.send(updatedAuthor);
     } catch (e) {
       res.send(e);
@@ -82,6 +82,7 @@ router.patch(
 router.delete("/:id", admin, async (req, res) => {
   const id = req.params.id;
   try {
+    const books = await bookModel.deleteMany({ authorId: id });
     const author = await authorModel.findById({ _id: id });
     if (!author) {
       res.status(404).send("author not found");

@@ -74,7 +74,7 @@ router.patch(
       }
       category.name = req.body.name;
       await category.save();
-      res.status(200).send("updated successfully");
+      res.send(category);
     } catch (e) {
       res.send(e);
     }
