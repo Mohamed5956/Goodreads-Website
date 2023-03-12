@@ -80,42 +80,42 @@ router.delete("/:id", admin, async (req, res) => {
 });
 
 //------------/books/author/:authorId
-router.get("/author/:authorId", async (req, res) => {
-  const id = req.params.authorId;
-  try {
-    const book = await booksModel
-      .find({ authorId: id })
-      .populate("authorId")
-      .populate("categoryId")
-      .populate("reviewId");
-    res.header("Access-Control-Allow-Origin", "http://localhost:4200"); // update with your Angular app URL
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept"
-    );
-    res.send(book);
-  } catch (e) {
-    res.send(e);
-  }
-});
-//--------/books/category/:categoryId
-router.get("/category/:categoryId", async (req, res) => {
-  const id = req.params.categoryId;
-  try {
-    const book = await booksModel
-      .find({ categoryId: id })
-      .populate("authorId")
-      .populate("categoryId")
-      .populate("reviewId");
-    res.header("Access-Control-Allow-Origin", "http://localhost:4200"); // update with your Angular app URL
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept"
-    );
-    res.send(book);
-  } catch (e) {
-    res.send(e);
-  }
-});
+// router.get("/author/:authorId", async (req, res) => {
+//   const id = req.params.authorId;
+//   try {
+//     const book = await booksModel
+//       .find({ authorId: id })
+//       .populate("authorId")
+//       .populate("categoryId")
+//       .populate("reviewId");
+//     res.header("Access-Control-Allow-Origin", "http://localhost:4200"); // update with your Angular app URL
+//     res.header(
+//       "Access-Control-Allow-Headers",
+//       "Origin, X-Requested-With, Content-Type, Accept"
+//     );
+//     res.send(book);
+//   } catch (e) {
+//     res.send(e);
+//   }
+// });
+// //--------/books/category/:categoryId
+// router.get("/category/:categoryId", async (req, res) => {
+//   const id = req.params.categoryId;
+//   try {
+//     const book = await booksModel
+//       .find({ categoryId: id })
+//       .populate("authorId")
+//       .populate("categoryId")
+//       .populate("reviewId");
+//     res.header("Access-Control-Allow-Origin", "http://localhost:4200"); // update with your Angular app URL
+//     res.header(
+//       "Access-Control-Allow-Headers",
+//       "Origin, X-Requested-With, Content-Type, Accept"
+//     );
+//     res.send(book);
+//   } catch (e) {
+//     res.send(e);
+//   }
+// });
 
 module.exports = router;

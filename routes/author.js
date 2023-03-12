@@ -7,6 +7,7 @@ const upload = require("../middlewares/upload");
 const fs = require("fs");
 const path = require("path");
 const bookModel = require("../models/books");
+
 router.get("/", async (req, res) => {
   try {
     const authors = await authorModel.find({});
@@ -54,25 +55,23 @@ router.patch(
     try {
       const author = await authorModel.findById(id);
       if (!author) {
-        res.status(404).send("author not found");
+        res.status(404);
       }
       if (req.file) {
         const imagePath = path.join(
           __dirname,
           "../assets/uploads/author",
-          author.photo
+          author.image
         );
         fs.unlinkSync(imagePath);
-        author.photo = req.file.filename;
+        author.image = req.file.filename;
       }
-      (author.firstName = req.body.name),
-        (author.lastName = req.body.lastName),
-        (author.birthDate = req.body.birthDate),
-        (author.description = req.body.description),
-        (author.photo = req.file.filename),
-        await author.save();
+      author.firstName = req.body.firstName;
+      author.lastName = req.body.lastName;
+      author.birthDate = req.body.birthDate;
+      author.description = req.body.description;
+      await author.save();
       res.send(author);
-      res.send(updatedAuthor);
     } catch (e) {
       res.send(e);
     }
