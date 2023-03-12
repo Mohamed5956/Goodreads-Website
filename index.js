@@ -12,6 +12,7 @@ const User = require("./models/users");
 const auth = require("./middlewares/auth");
 
 app.use(express.json());
+app.use(express.static("assets"));
 app.use(cors());
 
 // routes

@@ -57,7 +57,6 @@ router.patch(
   "/:id",
   [admin, upload("category").single("image")],
   async (req, res) => {
-    console.log("hi update");
     const id = req.params.id;
     try {
       const category = await categoryModel.findById(id);
@@ -67,7 +66,7 @@ router.patch(
       if (req.file) {
         const imagePath = path.join(
           __dirname,
-          "../uploads/category",
+          "../assets/uploads/category",
           category.image
         );
         fs.unlinkSync(imagePath);

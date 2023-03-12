@@ -58,7 +58,7 @@ router.patch(
       if (req.file) {
         const imagePath = path.join(
           __dirname,
-          "../uploads/author",
+          "../assets/uploads/author",
           author.photo
         );
         fs.unlinkSync(imagePath);
