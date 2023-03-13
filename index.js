@@ -8,6 +8,8 @@ const app = express();
 const auth = require("./middlewares/auth");
 
 app.use(express.json());
+
+app.use("/assets", express.static("assets"));
 app.use(cors());
 
 // routes
