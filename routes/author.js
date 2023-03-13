@@ -1,12 +1,12 @@
 const express = require("express");
-const admin = require("../middlewares/admin");
-const auth = require("../middlewares/auth");
 const router = express.Router();
 const authorModel = require("../models/author");
+const bookModel = require("../models/books");
+const admin = require("../middlewares/admin");
+const auth = require("../middlewares/auth");
 const upload = require("../middlewares/upload");
 const fs = require("fs");
 const path = require("path");
-const bookModel = require("../models/books");
 
 router.get("/", async (req, res) => {
   try {
@@ -55,26 +55,20 @@ router.patch(
     try {
       const author = await authorModel.findById(id);
       console.log(author);
-      // if (req.file) {
-      //   const imagePath = path.join(
-      //     __dirname,
-      //     "../assets/uploads/author",
-      //     author.image
-      //   );
-      //   fs.unlinkSync(imagePath);
-      //   author.image = req.file.filename;
-      // }
+      if (req.file) {
+        const photoPath = path.join(
+          __dirname,
+          "../assets/uploads/author",
+          author.photo
+        );
+        fs.unlinkSync(photoPath);
+        author.photo = req.file.filename;
+      }
       author.firstName = req.body.firstName;
       author.lastName = req.body.lastName;
       author.birthDate = req.body.birthDate;
       author.description = req.body.description;
       await author.save();
-      // author.firstName = req.body.firstName;
-      // author.lastName = req.body.lastName;
-      // author.birthDate = req.body.birthDate;
-      // author.description = req.body.description;
-      // console.log(author);
-      // await author.save();
       res.send(author);
     } catch (e) {
       res.send(e);
@@ -90,13 +84,13 @@ router.delete("/:id", admin, async (req, res) => {
     if (!author) {
       res.status(404).send("author not found");
     }
-    const imagePath = path.join(
+    const photoPath = path.join(
       __dirname,
       "../assets/uploads",
       "author",
       author.photo
     );
-    fs.unlinkSync(imagePath);
+    fs.unlinkSync(photoPath);
     const deletedAuthor = await authorModel.findByIdAndDelete(id);
     res.status(200).send(deletedAuthor);
   } catch (e) {

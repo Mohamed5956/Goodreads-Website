@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const authorScehma = new mongoose.Schema({
-  photo: { type: String, required: true },
+  photo: { type: String },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   birthDate: { type: String, required: true },
