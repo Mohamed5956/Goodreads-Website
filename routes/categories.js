@@ -38,9 +38,10 @@ router.post(
   "/",
   [admin, upload("category").single("image")],
   async (req, res) => {
+    const path = "/assets/uploads/category/";
     const category = new categoryModel({
       name: req.body.name,
-      image: req.file.filename,
+      image: req.protocol + "://" + req.get("host") + path + req.file.filename,
     });
     try {
       await category.save();

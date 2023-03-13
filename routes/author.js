@@ -54,23 +54,27 @@ router.patch(
     const id = req.params.id;
     try {
       const author = await authorModel.findById(id);
-      if (!author) {
-        res.status(404);
-      }
-      if (req.file) {
-        const imagePath = path.join(
-          __dirname,
-          "../assets/uploads/author",
-          author.image
-        );
-        fs.unlinkSync(imagePath);
-        author.image = req.file.filename;
-      }
+      console.log(author);
+      // if (req.file) {
+      //   const imagePath = path.join(
+      //     __dirname,
+      //     "../assets/uploads/author",
+      //     author.image
+      //   );
+      //   fs.unlinkSync(imagePath);
+      //   author.image = req.file.filename;
+      // }
       author.firstName = req.body.firstName;
       author.lastName = req.body.lastName;
       author.birthDate = req.body.birthDate;
       author.description = req.body.description;
       await author.save();
+      // author.firstName = req.body.firstName;
+      // author.lastName = req.body.lastName;
+      // author.birthDate = req.body.birthDate;
+      // author.description = req.body.description;
+      // console.log(author);
+      // await author.save();
       res.send(author);
     } catch (e) {
       res.send(e);
