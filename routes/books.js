@@ -1,6 +1,7 @@
 const express = require("express");
 const admin = require("../middlewares/admin");
 const auth = require("../middlewares/auth");
+const upload = require("../middlewares/upload");
 const authorModel = require("../models/author");
 
 const router = express.Router();
@@ -46,9 +47,33 @@ router.get("/:id", async (req, res) => {
     res.send(e);
   }
 });
-
-router.post("/", admin, async (req, res) => {
-  const book = new booksModel(req.body);
+// router.post(
+//   "/",
+//   [admin, upload("category").single("image")],
+//   async (req, res) => {
+//     const path = "/assets/uploads/category/";
+//     const category = new categoryModel({
+//       name: req.body.name,
+//       image: req.file.filename,
+//     });
+//     try {
+//       await category.save();
+//       res.send(category);
+//     } catch (e) {
+//       res.send(e);
+//     }
+//   }
+// );
+router.post("/", [admin, upload("book").single("image")], async (req, res) => {
+  const path = "/assets/uploads/book/";
+  const book = new booksModel({
+    title: req.body.title,
+    description:req.body.description,
+    categoryId:req.body.categoryId,
+    authorId:req.body.authorId,
+    reviewId:req.body.reviewId,
+    image: req.file.filename,
+  });
   try {
     await book.save();
     res.send(book);
