@@ -1,10 +1,13 @@
 const express = require("express");
 const admin = require("../middlewares/admin");
 const auth = require("../middlewares/auth");
+const upload = require("../middlewares/upload");
 const authorModel = require("../models/author");
 
 const router = express.Router();
 const booksModel = require("../models/books");
+const fs = require("fs");
+const path = require("path");
 
 router.get("/", async (req, res) => {
   try {
@@ -47,8 +50,15 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/", admin, async (req, res) => {
-  const book = new booksModel(req.body);
+router.post("/", [admin, upload("book").single("image")], async (req, res) => {
+  const book = new booksModel({
+    title: req.body.title,
+    description: req.body.description,
+    categoryId: req.body.categoryId,
+    authorId: req.body.authorId,
+    reviewId: req.body.reviewId,
+    image: req.file.filename,
+  });
   try {
     await book.save();
     res.send(book);
@@ -57,23 +67,59 @@ router.post("/", admin, async (req, res) => {
   }
 });
 
-router.patch("/:id", admin, async (req, res) => {
-  const id = req.params.id;
-  const updates = req.body;
-  try {
-    const book = await booksModel.findByIdAndUpdate(id, updates);
-    res.send(book);
-  } catch (e) {
-    res.send(e);
+router.patch(
+  "/:id",
+  [admin, upload("book").single("image")],
+  async (req, res) => {
+    const id = req.params.id;
+    console.log(id);
+    try {
+      const book = await booksModel.findById(id);
+      if (!book) {
+        res.status(404);
+        console.log("book not found");
+      }
+      console.log(book);
+      if (req.file) {
+        const imagePath = path.join(
+          __dirname,
+          "../assets/uploads/book",
+          book.image
+        );
+        fs.unlinkSync(imagePath);
+        book.image = req.file.filename;
+      }
+      book.title = req.body.title;
+      book.description = req.body.description;
+      book.authorId = req.body.authorId;
+      book.categoryId = req.body.categoryId;
+      book.reviewId = req.body.reviewId;
+      console.log(book);
+      await book.save();
+      res.send(book);
+    } catch (e) {
+      res.send(e);
+    }
   }
-});
+);
 
 router.delete("/:id", admin, async (req, res) => {
   const id = req.params.id;
   try {
-    // const deletedAuthor = await authorModel.deleteMany({ authorId: id });
-    const book = await booksModel.findByIdAndDelete({ _id: id });
-    res.send(book);
+    const book = await booksModel.findById(id);
+    console.log(book);
+    if (!book) {
+      res.status(404).send("book not found");
+    }
+    const imagePath = path.join(
+      __dirname,
+      "../assets/uploads",
+      "book",
+      book.image
+    );
+    fs.unlinkSync(imagePath);
+    const deletedBook = await booksModel.findByIdAndDelete(id);
+    res.send(deletedBook);
   } catch (e) {
     res.send(e);
   }
