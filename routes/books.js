@@ -88,11 +88,6 @@ router.get("/author/:authorId", async (req, res) => {
       .populate("authorId")
       .populate("categoryId")
       .populate("reviewId");
-    res.header("Access-Control-Allow-Origin", "http://localhost:4200"); // update with your Angular app URL
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept"
-    );
     res.send(book);
   } catch (e) {
     res.send(e);
@@ -107,11 +102,6 @@ router.get("/category/:categoryId", async (req, res) => {
       .populate("authorId")
       .populate("categoryId")
       .populate("reviewId");
-    res.header("Access-Control-Allow-Origin", "http://localhost:4200"); // update with your Angular app URL
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept"
-    );
     res.send(book);
   } catch (e) {
     res.send(e);
