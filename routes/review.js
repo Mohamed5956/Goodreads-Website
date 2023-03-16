@@ -2,11 +2,134 @@ const express = require("express");
 const auth = require("../middlewares/auth");
 const router = express.Router();
 const reviewModel = require("../models/review");
+const bookModel = require("../models/books");
+const authorModel = require("../models/author");
 
 router.get("/", async (req, res) => {
   try {
-    const reviews = await reviewModel.find({});
-    res.send(reviews);
+    const state = req.query.state;
+    const userid = req.query.id
+    if( state == 'all')
+    {
+      const reviews = await reviewModel.find({ userId:userid }).populate("bookId")
+      const books = await reviews.map((elm) => elm.bookId)
+      const authorsid = await books.map((elm) => elm.authorId)
+      const authors = []
+       for(let i =0;i<authorsid.length;i++)
+       {
+         authors.push(await authorModel.findById(authorsid[i]))
+       }
+       onebook={
+        "book":'',
+        "authors":''
+       }
+       mybook=[]
+
+       for(let i =0;i<authorsid.length;i++)
+       {
+         
+        onebook={
+          "book":reviews[i],
+          "authors":authors[i]
+        }
+
+        mybook.push(await onebook)
+       }
+      res.send(mybook);
+    }
+    else if( state == 'Read')
+    {
+      const reviews = await (await reviewModel.find({ userId:userid,status:"readed" }).populate("bookId"))
+      const books = await reviews.map((elm) => elm.bookId)
+      const authorsid = await books.map((elm) => elm.authorId)
+      const authors = []
+       for(let i =0;i<authorsid.length;i++)
+       {
+         authors.push(await authorModel.findById(authorsid[i]))
+       }
+       onebook={
+        "book":'',
+        "authors":''
+       }
+       mybook=[]
+
+       for(let i =0;i<authorsid.length;i++)
+       {
+         
+        onebook={
+          "book":reviews[i],
+          "authors":authors[i]
+        }
+
+        mybook.push(await onebook)
+       }
+     
+
+      res.send(mybook);
+    }
+    else if( state == 'want')
+    {
+      const reviews = await reviewModel.find({ userId:userid,status:"want to read" }).populate("bookId")
+      const books = await reviews.map((elm) => elm.bookId)
+      const authorsid = await books.map((elm) => elm.authorId)
+      const authors = []
+       for(let i =0;i<authorsid.length;i++)
+       {
+         authors.push(await authorModel.findById(authorsid[i]))
+       }
+       onebook={
+        "book":'',
+        "authors":''
+       }
+       mybook=[]
+
+       for(let i =0;i<authorsid.length;i++)
+       {
+         
+        onebook={
+          "book":reviews[i],
+          "authors":authors[i]
+        }
+
+        mybook.push(await onebook)
+       }
+     
+      res.send(mybook);
+    }
+    else if( state == 'currently')
+    {
+      const reviews = await reviewModel.find({ userId:userid,status:"reading" }).populate("bookId")
+      const books = await reviews.map((elm) => elm.bookId)
+      const authorsid = await books.map((elm) => elm.authorId)
+      const authors = []
+       for(let i =0;i<authorsid.length;i++)
+       {
+         authors.push(await authorModel.findById(authorsid[i]))
+       }
+       onebook={
+        "book":'',
+        "authors":''
+       }
+       mybook=[]
+
+       for(let i =0;i<authorsid.length;i++)
+       {
+         
+        onebook={
+          "book":reviews[i],
+          "authors":authors[i]
+        }
+
+        mybook.push(await onebook)
+       }
+      res.send(mybook);
+    }
+    else
+    {
+      const reviews = await reviewModel.find({});
+      res.send(reviews);
+    }
+   
   } catch (err) {
     res.send(err);
   }
