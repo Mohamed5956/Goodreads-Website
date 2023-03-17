@@ -9,27 +9,44 @@ const booksModel = require("../models/books");
 const fs = require("fs");
 const path = require("path");
 
+// pagination all books
+router.get("/page/:page", async (req, res) => {
+  try {
+    const page = req.params.page;
+    const limit = 1;
+    const countBooks = await booksModel.find({}).count(); //num category
+    const totalPages = Math.ceil(countBooks / limit); //num pages
+
+    const booksPage = await booksModel
+      .find({})
+      .populate("authorId")
+      .populate("categoryId")
+      .populate("reviewId")
+      .limit(limit)
+      .skip((page - 1) * limit)
+      .exec();
+    const objBooks = {
+      pages: {
+        totalPages,
+        page,
+      },
+      data: booksPage,
+    };
+       return res.json(objBooks);
+    } catch (err) {
+        res.status(500).send(err)
+    }
+});
+
+// get all books
 router.get("/", async (req, res) => {
   try {
-    // let { page, size, sort } = req.query;
 
-    // If the page is not applied in query.
-    // if (!page) {
-    // Make the Default value one.
-    //   page = 1;
-    // }
-
-    // if (!size) {
-    //   size = 2;
-    // }
-    // const limit = parseInt(size);
-    // .sort(_id)
-    // .limit(limit)
     const books = await booksModel
       .find({})
       .populate("authorId")
       .populate("categoryId")
-      .populate("reviewId");
+      .populate("reviewId")
     res.send(books);
   } catch (err) {
     res.send(err);
