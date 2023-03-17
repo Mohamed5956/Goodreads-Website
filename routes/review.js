@@ -29,7 +29,15 @@ router.get("/", async (req, res) => {
           arrRatings.forEach((elm) => {
             ratingsSum += elm;
           });
-          const avgRating = ratingsSum / arrRatings.length;
+          let avgRating ;
+          if(arrRatings.length == 0)
+          {
+            avgRating = 0;
+          }
+          else
+          {
+            avgRating = ratingsSum / arrRatings.length;
+          }
           rating.push(avgRating);
        }
 
@@ -73,7 +81,15 @@ router.get("/", async (req, res) => {
          arrRatings.forEach((elm) => {
            ratingsSum += elm;
          });
-         const avgRating = ratingsSum / arrRatings.length;
+         let avgRating ;
+         if(arrRatings.length == 0)
+         {
+           avgRating = 0;
+         }
+         else
+         {
+           avgRating = ratingsSum / arrRatings.length;
+         }
          rating.push(avgRating);
       }
       
@@ -117,7 +133,15 @@ router.get("/", async (req, res) => {
          arrRatings.forEach((elm) => {
            ratingsSum += elm;
          });
-         const avgRating = ratingsSum / arrRatings.length;
+         let avgRating ;
+         if(arrRatings.length == 0)
+         {
+           avgRating = 0;
+         }
+         else
+         {
+           avgRating = ratingsSum / arrRatings.length;
+         }
          rating.push(avgRating);
       }
       
@@ -161,7 +185,15 @@ router.get("/", async (req, res) => {
          arrRatings.forEach((elm) => {
            ratingsSum += elm;
          });
-         const avgRating = ratingsSum / arrRatings.length;
+         let avgRating ;
+         if(arrRatings.length == 0)
+         {
+           avgRating = 0;
+         }
+         else
+         {
+           avgRating = ratingsSum / arrRatings.length;
+         }
          rating.push(avgRating);
       }
       
