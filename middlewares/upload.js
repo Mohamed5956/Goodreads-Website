@@ -1,8 +1,8 @@
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
-require("dotenv").config();
-const imgUrl = process.env.imgUrl;
+// require("dotenv").config();
+// const imgUrl = process.env.imgUrl;
 
 const storage = (folderName) =>
   multer.diskStorage({
