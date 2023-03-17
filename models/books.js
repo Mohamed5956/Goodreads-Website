@@ -14,7 +14,7 @@ const bookScehma = new mongoose.Schema({
     required: true,
   },
   image: String,
-  reviewId: { type: mongoose.Schema.Types.ObjectId, ref: "review" },
+   reviewId: { type: mongoose.Schema.Types.ObjectId, ref: "review" },
 });
 
 const bookModel = mongoose.model("book", bookScehma);

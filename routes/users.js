@@ -9,7 +9,7 @@ const auth = require("../middlewares/auth");
 router.get("/:email", async (req, res) => {
   const email = req.params.email;
   try {
-    const user = await userModel.find({ email: email });
+    const user = await userModel.findOne({ email: email });
     res.send(user);
   } catch (e) {
     res.send(e);
