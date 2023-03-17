@@ -15,13 +15,28 @@ router.get("/", async (req, res) => {
       const books = await reviews.map((elm) => elm.bookId)
       const authorsid = await books.map((elm) => elm.authorId)
       const authors = []
+      const rating = []
        for(let i =0;i<authorsid.length;i++)
        {
          authors.push(await authorModel.findById(authorsid[i]))
        }
+
+       for(let i =0;i<reviews.length;i++)
+       {
+          const ratingsBook = await reviewModel.find({ bookId:books[i]  });
+          const arrRatings = ratingsBook.map((elm) => elm.rating);
+          var ratingsSum = 0;
+          arrRatings.forEach((elm) => {
+            ratingsSum += elm;
+          });
+          const avgRating = ratingsSum / arrRatings.length;
+          rating.push(avgRating);
+       }
+
        onebook={
         "book":'',
-        "authors":''
+        "authors":'',
+        "avg_rating":''
        }
        mybook=[]
 
@@ -30,7 +45,8 @@ router.get("/", async (req, res) => {
          
         onebook={
           "book":reviews[i],
-          "authors":authors[i]
+          "authors":authors[i],
+          "avg_rating":rating[i]
         }
 
         mybook.push(await onebook)
@@ -43,29 +59,43 @@ router.get("/", async (req, res) => {
       const books = await reviews.map((elm) => elm.bookId)
       const authorsid = await books.map((elm) => elm.authorId)
       const authors = []
-       for(let i =0;i<authorsid.length;i++)
-       {
-         authors.push(await authorModel.findById(authorsid[i]))
-       }
+      const rating = []
+      for(let i =0;i<authorsid.length;i++)
+      {
+        authors.push(await authorModel.findById(authorsid[i]))
+      }
+
+      for(let i =0;i<reviews.length;i++)
+      {
+         const ratingsBook = await reviewModel.find({ bookId:books[i]  });
+         const arrRatings = ratingsBook.map((elm) => elm.rating);
+         var ratingsSum = 0;
+         arrRatings.forEach((elm) => {
+           ratingsSum += elm;
+         });
+         const avgRating = ratingsSum / arrRatings.length;
+         rating.push(avgRating);
+      }
+      
+      onebook={
+       "book":'',
+       "authors":'',
+       "avg_rating":''
+      }
+      mybook=[]
+
+      for(let i =0;i<authorsid.length;i++)
+      {
+        
        onebook={
-        "book":'',
-        "authors":''
+         "book":reviews[i],
+         "authors":authors[i],
+         "avg_rating":rating[i]
        }
-       mybook=[]
 
-       for(let i =0;i<authorsid.length;i++)
-       {
-         
-        onebook={
-          "book":reviews[i],
-          "authors":authors[i]
-        }
-
-        mybook.push(await onebook)
-       }
-     
-
-      res.send(mybook);
+       mybook.push(await onebook)
+      }
+     res.send(mybook);
     }
     else if( state == 'want')
     {
@@ -73,28 +103,43 @@ router.get("/", async (req, res) => {
       const books = await reviews.map((elm) => elm.bookId)
       const authorsid = await books.map((elm) => elm.authorId)
       const authors = []
-       for(let i =0;i<authorsid.length;i++)
-       {
-         authors.push(await authorModel.findById(authorsid[i]))
-       }
+      const rating = []
+      for(let i =0;i<authorsid.length;i++)
+      {
+        authors.push(await authorModel.findById(authorsid[i]))
+      }
+
+      for(let i =0;i<reviews.length;i++)
+      {
+         const ratingsBook = await reviewModel.find({ bookId:books[i]  });
+         const arrRatings = ratingsBook.map((elm) => elm.rating);
+         var ratingsSum = 0;
+         arrRatings.forEach((elm) => {
+           ratingsSum += elm;
+         });
+         const avgRating = ratingsSum / arrRatings.length;
+         rating.push(avgRating);
+      }
+      
+      onebook={
+       "book":'',
+       "authors":'',
+       "avg_rating":''
+      }
+      mybook=[]
+
+      for(let i =0;i<authorsid.length;i++)
+      {
+        
        onebook={
-        "book":'',
-        "authors":''
+         "book":reviews[i],
+         "authors":authors[i],
+         "avg_rating":rating[i]
        }
-       mybook=[]
 
-       for(let i =0;i<authorsid.length;i++)
-       {
-         
-        onebook={
-          "book":reviews[i],
-          "authors":authors[i]
-        }
-
-        mybook.push(await onebook)
-       }
-     
-      res.send(mybook);
+       mybook.push(await onebook)
+      }
+     res.send(mybook);
     }
     else if( state == 'currently')
     {
@@ -102,27 +147,43 @@ router.get("/", async (req, res) => {
       const books = await reviews.map((elm) => elm.bookId)
       const authorsid = await books.map((elm) => elm.authorId)
       const authors = []
-       for(let i =0;i<authorsid.length;i++)
-       {
-         authors.push(await authorModel.findById(authorsid[i]))
-       }
+      const rating = []
+      for(let i =0;i<authorsid.length;i++)
+      {
+        authors.push(await authorModel.findById(authorsid[i]))
+      }
+
+      for(let i =0;i<reviews.length;i++)
+      {
+         const ratingsBook = await reviewModel.find({ bookId:books[i]  });
+         const arrRatings = ratingsBook.map((elm) => elm.rating);
+         var ratingsSum = 0;
+         arrRatings.forEach((elm) => {
+           ratingsSum += elm;
+         });
+         const avgRating = ratingsSum / arrRatings.length;
+         rating.push(avgRating);
+      }
+      
+      onebook={
+       "book":'',
+       "authors":'',
+       "avg_rating":''
+      }
+      mybook=[]
+
+      for(let i =0;i<authorsid.length;i++)
+      {
+        
        onebook={
-        "book":'',
-        "authors":''
+         "book":reviews[i],
+         "authors":authors[i],
+         "avg_rating":rating[i]
        }
-       mybook=[]
 
-       for(let i =0;i<authorsid.length;i++)
-       {
-         
-        onebook={
-          "book":reviews[i],
-          "authors":authors[i]
-        }
-
-        mybook.push(await onebook)
-       }
-      res.send(mybook);
+       mybook.push(await onebook)
+      }
+     res.send(mybook);
     }
     else
     {
