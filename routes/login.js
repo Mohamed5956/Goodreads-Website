@@ -11,7 +11,7 @@ router.post("/", async (req, res) => {
     const { email, password } = req.body;
 
     if (!(email && password)) {
-      res.status(400).send("All input is required");
+      return res.status(400).send("All input is required");
     }
 
     const user = await User.findOne({ email });
@@ -19,9 +19,9 @@ router.post("/", async (req, res) => {
       const token = jwt.sign({ user_id: user._id, email }, TOKEN_KEY);
 
       user.token = token;
-      res.status(200).json(user);
+      return res.status(200).json(user);
     }
-    res.status(400).json("Invalid Credentials");
+    return res.status(400).json("Invalid Credentials");
   } catch (err) {
     console.log(err);
   }
