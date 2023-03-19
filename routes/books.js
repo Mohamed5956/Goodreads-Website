@@ -3,6 +3,7 @@ const admin = require("../middlewares/admin");
 const auth = require("../middlewares/auth");
 const upload = require("../middlewares/upload");
 const authorModel = require("../models/author");
+const reviewModel = require("../models/review");
 
 const router = express.Router();
 const booksModel = require("../models/books");
@@ -145,13 +146,56 @@ router.delete("/:id", admin, async (req, res) => {
 //------------/books/author/:authorId
 router.get("/author/:authorId", async (req, res) => {
   const id = req.params.authorId;
+  const avgBook=[]
   try {
     const book = await booksModel
       .find({ authorId: id })
       .populate("authorId")
       .populate("categoryId")
       .populate("reviewId");
-    res.send(book);
+
+       for(let i=0;i<book.length;i++)
+       {
+        const ratingsBook = await reviewModel.find({ bookId: book[i]._id });
+        const arrRatings = ratingsBook.map((elm) => elm.rating);
+        var ratingsSum = 0;
+        arrRatings.forEach((elm) => {
+          ratingsSum += elm;
+        });
+        let avgRating ;
+          if(arrRatings.length == 0)
+          {
+            avgRating = 0;
+          }
+          else
+          {
+            avgRating = ratingsSum / arrRatings.length;
+          }
+        
+          rateObj = {
+            "avg": avgRating,
+            "count": arrRatings.length,
+          };
+          avgBook.push(rateObj);
+       }
+
+      const bookWithAvg=[]
+          bookandavg={
+            "book":'',
+            "avg":'',
+          }
+           for(let i=0;i<book.length;i++)
+           {
+            bookandavg={
+              "book":book[i],
+              "avg":avgBook[i],
+            } 
+            bookWithAvg.push(bookandavg);
+           }
+      
+   
+
+    res.send(bookWithAvg);
   } catch (e) {
     res.send(e);
   }

@@ -10,7 +10,7 @@ const reviewSchema = new mongoose.Schema({
     ref: "book",
     required: true,
   },
-  rating: Number,
+  rating: {type:Number, default: 0},
   review: String,
   status: {
     type: String,
