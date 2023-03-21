@@ -10,34 +10,35 @@ const booksModel = require("../models/books");
 const fs = require("fs");
 const path = require("path");
 
-// pagination all books
-router.get("/page/:page", async (req, res) => {
-  try {
-    const page = req.params.page;
-    const limit = 1;
-    const countBooks = await booksModel.find({}).count(); //num category
-    const totalPages = Math.ceil(countBooks / limit); //num pages
 
-    const booksPage = await booksModel
-      .find({})
-      .populate("authorId")
-      .populate("categoryId")
-      .populate("reviewId")
-      .limit(limit)
-      .skip((page - 1) * limit)
-      .exec();
-    const objBooks = {
-      pages: {
-        totalPages,
-        page,
-      },
-      data: booksPage,
-    };
-       return res.json(objBooks);
-    } catch (err) {
-        res.status(500).send(err)
-    }
-});
+// pagination all books
+// router.get("/page/:page", async (req, res) => {
+//   try {
+//     const page = req.params.page;
+//     const limit = 1;
+//     const countBooks = await booksModel.find({}).count(); //num category
+//     const totalPages = Math.ceil(countBooks / limit); //num pages
+
+//     const booksPage = await booksModel
+//       .find({})
+//       .populate("authorId")
+//       .populate("categoryId")
+//       .populate("reviewId")
+//       .limit(limit)
+//       .skip((page - 1) * limit)
+//       .exec();
+//     const objBooks = {
+//       pages: {
+//         totalPages,
+//         page,
+//       },
+//       data: booksPage,
+//     };
+//        return res.json(objBooks);
+//     } catch (err) {
+//         res.status(500).send(err)
+//     }
+// });
 
 // get all books
 router.get("/", async (req, res) => {
