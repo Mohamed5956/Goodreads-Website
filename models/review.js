@@ -10,8 +10,8 @@ const reviewSchema = new mongoose.Schema({
     ref: "book",
     required: true,
   },
-  rating: {type:Number, default: 0},
-  review: {type:String, default: ""},
+  rating: { type: Number, default: 0 },
+  review: { type: String, default: "" },
   status: {
     type: String,
     enum: ["reading", "want to read", "readed"],
