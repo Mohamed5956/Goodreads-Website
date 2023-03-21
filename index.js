@@ -50,6 +50,9 @@ app.use("/ratings", ratingsRouter);
 // http://localhost:5000/users/:email
 const usersRouter = require("./routes/users");
 app.use("/users", usersRouter);
+// http://localhost:5000/popular
+  const popularRouter = require("./routes/popular");
+  app.use("/popular", popularRouter);
 
 // db connection
 

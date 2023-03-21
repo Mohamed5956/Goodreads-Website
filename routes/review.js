@@ -283,7 +283,6 @@ router.patch("/:id", auth, async (req, res) => {
   const updatedData = req.body;
   try {
     const review = await reviewModel.findByIdAndUpdate(id, updatedData);
-    // console.log(review);
     res.send(updatedData);
   } catch (e) {
     res.send(e);
