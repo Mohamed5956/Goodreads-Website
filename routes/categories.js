@@ -36,7 +36,7 @@ router.get("/:id", async (req, res) => {
 
 router.post(
   "/",
-  [admin, upload("category").single("image")],
+  [ upload("category").single("image")],
   async (req, res) => {
     const path = "/assets/uploads/category/";
     const category = new categoryModel({
