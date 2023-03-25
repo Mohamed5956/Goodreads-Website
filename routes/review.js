@@ -270,6 +270,10 @@ router.get("/:userId/:bookId", async (req, res) => {
 
 router.post("/", auth, async (req, res) => {
   const review = new reviewModel(req.body);
+  // const userId=req.body.userId
+  // const bookId=req.body.bookId
+  // const status=req.body.status
+  // reviewModel.find({userId: userId, bookId: bookId}).then((review) => {console.log(review)})  
   try {
     await review.save();
     res.send(review);
@@ -278,11 +282,11 @@ router.post("/", auth, async (req, res) => {
   }
 });
 
-router.patch("/:id", auth, async (req, res) => {
+router.patch("/:id", async (req, res) => {
   const id = req.params.id;
   const updatedData = req.body;
   try {
-    const review = await reviewModel.findByIdAndUpdate(id, updatedData);
+    await reviewModel.findByIdAndUpdate(id, updatedData);
     res.send(updatedData);
   } catch (e) {
     res.send(e);
