@@ -12,6 +12,7 @@ const reviewSchema = new mongoose.Schema({
   },
   rating: { type: Number, default: 0 },
   review: { type: String, default: "" },
+  Date  : { type:String},
   status: {
     type: String,
     enum: ["reading", "want to read", "readed"],
