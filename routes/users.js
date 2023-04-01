@@ -33,14 +33,13 @@ router.get("/:email", async (req, res) => {
 
 router.patch("/:id", upload("user").single("image"), async (req, res) => {
   const id = req.params.id;
-   try {
+  try {
     const email = req.body.email;
     const oldUser = await userModel.findOne({ email });
-    if(oldUser && oldUser._id != id)
-      {
-        return res.status(409).json("Email Already Exist");
-      }
-     const user = await userModel.findById(id);
+    if (oldUser && oldUser._id != id) {
+      return res.status(409).json("Email Already Exist");
+    }
+    const user = await userModel.findById(id);
     if (!user) {
       console.log("User not found");
     } else {
@@ -56,7 +55,7 @@ router.patch("/:id", upload("user").single("image"), async (req, res) => {
       user.password = encryptedPassword;
       await user.save();
       console.log("User saved successfully!");
-    return  res.json("User updated successfully!");
+      return res.json("User updated successfully!");
       if (req.file && req.file.name != "user.jpg" && user.image !== req.file.filename) {
         const imagePath = path.join(__dirname, "../assets/uploads/user", user.image);
         fs.unlinkSync(imagePath);
@@ -88,30 +87,60 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-router.get("/rate/:id", async (req, res) => {
-  const id = req.params.id;
+router.get("/reviews/rates", async (req, res) => {
+
   try {
-    const user = await reviewModel.find({ userId: id });
-    let rate = { rate: '' };
-    if (user.length == 0) {
-      rate.rate = 0;
+
+    const users = await userModel.find({});
+    const UsersId = users.map((user) => user._id);
+
+    let rates = [];
+    for (let i = 0; i < users.length; i++) {
+
+      rates.push((await reviewModel.find({ userId: users[i]._id })).length);
     }
-    else if (user.length > 0 && user.length <= 2) {
-      rate.rate = 1;
+
+    let userrates = [];
+    for (let i = 0; i < users.length; i++) {
+
+      
+      if (rates[i] == 0) {
+        userrates.push(0);
+      }
+      else if (rates[i] > 0 && rates[i] <= 2) {
+        userrates.push(1);
+      }
+      else if (rates[i] > 2 && rates[i] <= 4) {
+        userrates.push(2);
+      }
+      else if (rates[i] > 4 && rates[i] <= 6) {
+        userrates.push(3);
+      }
+      else if (rates[i] > 6 && rates[i] <= 8) {
+        userrates.push(4);
+      }
+      else {
+        userrates.push(5);
+      }
     }
-    else if (user.length > 2 && user.length <= 4) {
-      rate.rate = 2;
+    
+     rate_users ={
+      user:'',
+      rate:'',
+     }
+
+      let RatesOfUser=[];
+     for (let i = 0; i < users.length; i++) {
+      rate_users ={
+        user:users[i],
+        rate:userrates[i],
+       }
+       RatesOfUser.push(rate_users);
+      
     }
-    else if (user.length > 4 && user.length <= 6) {
-      rate.rate = 3;
-    }
-    else if (user.length > 6 && user.length <= 8) {
-      rate.rate = 4;
-    }
-    else {
-      rate.rate = 5;
-    }
-    res.send(rate);
+
+
+    res.send(RatesOfUser);
   } catch (e) {
     res.send(e);
   }
