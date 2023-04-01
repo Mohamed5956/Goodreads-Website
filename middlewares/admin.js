@@ -17,12 +17,6 @@ const admin = async (req, res, next) => {
     if (!req.user.isAdmin) {
       return res.status(403).send("You do not have admin privileges");
     }
-
-    // console.log(req.user.isAdmin);
-    // if (!req.user.isAdmin) {
-    //   // check if user is not an admin
-    //   return res.status(403).send("You do not have admin privileges");
-    // }
   } catch (err) {
     return res.status(401).send("Invalid Token");
   }

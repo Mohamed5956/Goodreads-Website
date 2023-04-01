@@ -231,22 +231,9 @@ router.get("/:userId/:bookId", async (req, res) => {
   }
 });
 
-// router.get("/:id", async (req, res) => {
-//   const id = req.params.id;
-//   try {
-//     const review = await reviewModel.findById({ _id: id });
-//     res.send(review);
-//   } catch (e) {
-//     res.send(e);
-//   }
-// });
 
 router.post("/", auth, async (req, res) => {
   const review = new reviewModel(req.body);
-  // const userId=req.body.userId
-  // const bookId=req.body.bookId
-  // const status=req.body.status
-  // reviewModel.find({userId: userId, bookId: bookId}).then((review) => {console.log(review)})
   try {
     await review.save();
     res.send(review);

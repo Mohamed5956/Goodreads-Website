@@ -47,49 +47,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// [{
-//     book:[                      // use filter in angular
-//       {
-
-//       }
-//     ]
-// author:[                       // use filter in angular
-//   {
-// 
-//   }
-// ]
-//   }]
 
 module.exports = router;
 
-// // //add comment
-// // router.post("/", auth, async (req, res) => {
-// //     const comment = new commentModel(req.body);
-// //     try {
-// //       await comment.save();
-// //       res.send(comment);
-// //     } catch (e) {
-// //       res.send(e);
-// //     }
-// //   });
-// // // update comment
-// // router.patch("/:id", auth, async (req, res) => {
-// //     const id = req.params.id;
-// //     const updatedData = req.body;
-// //     try {
-// //       const comment = await commentModel.findByIdAndUpdate(id, updatedData);
-// //       res.send(updatedData);
-// //     } catch (e) {
-// //       res.send(e);
-// //     }
-// //   });
-// // // delete comment
-// // router.delete("/:id", auth, async (req, res) => {
-// //     const id = req.params.id;
-// //     try {
-// //       const comment = await commentModel.findByIdAndDelete({ _id: id });
-// //       res.send(comment);
-// //     } catch (e) {
-// //       res.send(e);
-// //     }
-// //   });
+

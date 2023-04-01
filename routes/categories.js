@@ -24,7 +24,6 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   const id = req.params.id;
   try {
-    // const books = await booksModel.find({ categoryId: id });
     const category = await categoryModel.findById({ _id: id });
     res.send(category);
   } catch (e) {
